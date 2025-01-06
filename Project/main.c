@@ -80,7 +80,9 @@ while(choose!=3) {
 					arrangeCategory(categories,n,choose);
 					break;
 				case 7:
-					saveCategory("categories.dat", categories, n);
+					break;
+				default:
+					printf("Lua chon khong hop le");
 					break;
 			}
 		}
@@ -88,7 +90,7 @@ while(choose!=3) {
 		case 2://Quan ly san pham
 		filename="products.bin";
 		n=loadProduct(filename,products);
-		while(choose!=8) {
+		while(choose!=7) {
 			system("cls");
 				printfProductfunction();
 				printf("Lua chon cua ban:");
@@ -148,27 +150,20 @@ while(choose!=3) {
 					getchar();
 					break;
 				case 7:
-					system("cls");
-					arrangeProduct(products,n,choose);
-					printf("-------------------------------\n");
-					printf("Moi nhap phim bat ky de tro ve:");
-					getchar();
-					getchar();
 					break;
-				case 8:
-					saveProduct("products.bin",products,n);
+				default:
+					printf("Lua chon khong hop le");
 					break;
 			}
 		}
 			break;
 		case 3://Thoat
 			break;
+		default:
+			printf("Lua chon khong hop le");
+			break;
 	}
-	
 }
-
-
-
-	
+	printf("Ket thuc chuong trinh!");
 	return 0;
 }

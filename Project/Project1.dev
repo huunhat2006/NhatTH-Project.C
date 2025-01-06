@@ -100,7 +100,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
-FileName=products.bin
+FileName=producrs.bin
 Folder=date
 Compile=1
 Link=1

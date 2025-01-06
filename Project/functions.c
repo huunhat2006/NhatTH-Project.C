@@ -16,12 +16,12 @@ void printfFunction() {
 	printf("=============================\n");
 }
 void printfCategory(Category categories[],int n) {
-	printf("_______________________________________\n");
-	printf("|Id |                 Danh muc        |\n");
-	printf("---------------------------------------\n");
+	printf("___________________________________________\n");
+	printf("|Id     |                 Danh muc        |\n");
+	printf("-------------------------------------------\n");
 	for(int i=0;i<n;i++) {
-		printf("|%d  |%25s        | \n",categories[i].id,categories[i].nameCategory);
-		printf("|___|_________________________________|\n");
+		printf("|%d      |%25s        | \n",categories[i].id,categories[i].nameCategory);
+		printf("|_______|_________________________________|\n");
 	}
 }
 void addCategory(Category categories[],int location,int n) {
@@ -41,7 +41,6 @@ void addCategory(Category categories[],int location,int n) {
 		printf("Moi ban nhap id cho danh muc muon them:");
 		scanf("%d",&categories[location-1].id);
   		checkIdcategory(categories,n);
-		
 		fflush(stdin);
 		printf("Moi nhap ten cho danh muc muon them:");
 		fgets(categories[location-1].nameCategory,50,stdin);
@@ -61,10 +60,10 @@ void fixCategory(Category categories[],int checkId,int n){
 			fgets(categories[i].nameCategory,50,stdin);
 			categories[i].nameCategory[strcspn(categories[i].nameCategory,"\n")]='\0';
 			checkNamecategory(categories,n);
-			check=1;
+			check++;
 		}
 	}
-	if(check!=1) {
+	if(check==-1) {
 		printf("id khong hop le\n");
 		return ;
 	}
@@ -72,7 +71,6 @@ void fixCategory(Category categories[],int checkId,int n){
 void deleteCategory(Category categories[],int checkId,int n) {
 	printf("Moi ban nhap id muon xoa:");
 	scanf("%d",&checkId);
-	getchar();
 	int check=-1;
 	for (int i=0;i<n;i++) {
 		if(categories[i].id==checkId) {
@@ -80,11 +78,11 @@ void deleteCategory(Category categories[],int checkId,int n) {
 			for(int j=i;j<n+1;j++) {
 				categories[j].id=categories[j+1].id;
 				strcpy(categories[j].nameCategory,categories[j+1].nameCategory);
-			}
-			check=1;
+				check++;
+			}	
 		}
 	}
-	if(check!=1) {
+	if(check!=-1) {
 		printf("id khong hop le\n");
 		return ;
 	}
@@ -108,15 +106,15 @@ void findCategory(Category categories[],int n) {
         toLowerCase(temp,strlen(temp));
     	if(strstr(input,temp)!=NULL) {
     		printf("Danh muc ban can tim o vi tri:%d\n",i+1);
-    		printf("_______________________________________\n");
-			printf("|Id |                 Danh muc        |\n");
-			printf("---------------------------------------\n");
-			printf("|%d  |%25s        | \n",categories[i].id,categories[i].nameCategory);
-			printf("|___|_________________________________|\n");
-			check=1;
+    		printf("___________________________________________\n");
+			printf("|Id     |                 Danh muc        |\n");
+			printf("-------------------------------------------\n");
+			printf("|%d      |%25s        | \n",categories[i].id,categories[i].nameCategory);
+			printf("|_______|_________________________________|\n");
+			check++;
 		}
 	}
-	if(check!=1) {
+	if(check==-1) {
 		printf("Danh muc khong co trong cua hang\n");
 	}
 }
@@ -164,6 +162,9 @@ while(choose!=3) {
     		}
     		printfCategory(categories,n);
        		break;
+       	default:
+			printf("Lua chon khong hop le\n");
+			break;
      	case 3://Thoat
 			break;
 	}
@@ -190,10 +191,10 @@ void checkNamecategory(Category categories[],int n) {
 			categories[i].nameCategory[strcspn(categories[i].nameCategory,"\n")]='\0';
 		}
 	}
-	for (int i = 0; i < n - 1; i++) {
+	for (int i = 0; i < n - 2; i++) {
         for (int j = i + 1; j < n; j++) {
         	 if (strcmp(categories[i].nameCategory, categories[j].nameCategory)==0) {
-            	printf("Danh muc (%s) lap lai o vi tri %d va %d\n", categories[i].nameCategory, i, j);
+            	printf("Danh muc (%s) lap lai o vi tri %d va %d\n", categories[i].nameCategory, i+1, j+1);
                 printf("Moi ban nhap lai ten danh muc cho 1 trong 2 vi tri:");
                 fflush(stdin);
                 fgets(categories[i].nameCategory,50,stdin);
@@ -204,7 +205,7 @@ void checkNamecategory(Category categories[],int n) {
     }
 }
 void checkIdcategory(Category categories[],int n){
-    for (int i = 0; i < n - 1; i++) {
+    for (int i = 0; i < n - 2; i++) {
         for (int j = i + 1; j < n; j++) {
             if (categories[i].id == categories[j].id) {
                 printf("Id khong duoc trung lap (%d) lap lai o vi tri %d va %d\n", categories[i].id, i+1, j+1);
@@ -253,17 +254,16 @@ void printfProductfunction() {
 	printf("4.Xoa san pham\n");
 	printf("5.Tim kiem san pham\n");
 	printf("6.Sap xep san pham\n");
-	printf("7.Loc san pham\n");
-	printf("8.Thoat\n");
+	printf("7.Thoat\n");
 	printf("=============================\n");
 }
 void printfProduct(Product products[],int n) {
-		printf("_________________________________________________________________________________\n");
-		printf("|ID |Ten san pham             |Danh muc                           |Gia tien     |\n");
-		printf("---------------------------------------------------------------------------------\n");
+		printf("_____________________________________________________________________________________\n");
+		printf("|ID     |Ten san pham             |Danh muc                           |Gia tien     |\n");
+		printf("-------------------------------------------------------------------------------------\n");
 	for(int i=0;i<n;i++) {
-		printf("|%d  |%20s     |%25s          |%.3f\t| \n",products[i].id,products[i].nameProduct,products[i].nameCategory,products[i].priceProduct);
-		printf("|___|_________________________|___________________________________|_____________|\n");
+		printf("|%d      |%20s     |%25s          |%.3f\t    | \n",products[i].id,products[i].nameProduct,products[i].nameCategory,products[i].priceProduct);
+		printf("|_______|_________________________|___________________________________|_____________|\n");
 }
 }
 void addProduct(Product products[],int n,int location) {
@@ -283,7 +283,7 @@ void addProduct(Product products[],int n,int location) {
 			strcpy(products[i].nameCategory, products[i-1].nameCategory);
 			products[i].priceProduct=products[i-1].priceProduct;
 		}
-		printf("Moi ban nhap id cho danh muc muon them:");
+		printf("Moi ban nhap id cho san pham muon them:");
 		scanf("%d",&products[location-1].id);
 		checkIdproduct(products,n);
 		
@@ -296,7 +296,8 @@ void addProduct(Product products[],int n,int location) {
 		printf("Moi nhap danh muc cho san pham vua roi:");
 		fgets(products[location-1].nameCategory,50,stdin);
 		products[location-1].nameCategory[strcspn(products[location-1].nameCategory,"\n")]='\0';
-		checkNameinventory(products,n);
+		
+		
 		printf("Moi ban nhap gia cho san pham:");
 		scanf("%f",&products[location-1].priceProduct);
 		}
@@ -319,10 +320,10 @@ void fixProduct(Product products[],int n,int checkId) {
 			checkNameinventory(products,n);
 			printf("Moi ban nhap gia cho san pham:");
 			scanf("%f",&products[i].priceProduct);
-			check=1;
+			check++;
 		}
 	}
-	if(check!=1) {
+	if(check==-1) {
 		printf("id khong hop le\n");
 		return ;
 	}
@@ -340,11 +341,11 @@ void deleteProduct(Product products[],int n,int checkId) {
 				strcpy(products[j].nameProduct,products[j+1].nameProduct);
 				strcpy(products[j].nameCategory,products[j+1].nameCategory);
 				products[j].priceProduct=products[j+1].priceProduct;
+				check++;
 			}
-			check=1;
 		}
 	}
-	if(check!=1) {
+	if(check!=-1) {
 		printf("id khong hop le\n");
 		return ;
 	}
@@ -352,7 +353,7 @@ void deleteProduct(Product products[],int n,int checkId) {
 void findProduct(Product products[],int n) {
 		char input[50];
 		fflush(stdin);
-		printf("Moi ban nhap danh muc can tim kiem:");
+		printf("Moi ban nhap san pham can tim kiem:");
 		fgets(input, 50, stdin);
     	input[strcspn(input, "\n")] = '\0';
     	toLowerCase(input,strlen(input));
@@ -363,16 +364,16 @@ void findProduct(Product products[],int n) {
         	toLowerCase(temp,strlen(temp));
     		if(strstr(input,temp)!=NULL) {
     			printf("Danh muc ban can tim o vi tri:%d\n",i+1);
-    			printf("_________________________________________________________________________________\n");
-				printf("|ID |Ten san pham             |Danh muc                           |Gia tien     |\n");
-				printf("---------------------------------------------------------------------------------\n");
-				printf("|%d  |%20s     |%25s          |%.3f\t| \n",products[i].id,products[i].nameProduct,products[i].nameCategory,products[i].priceProduct);
-				printf("|___|_________________________|___________________________________|_____________|\n");
-				check=1;
+    			printf("_____________________________________________________________________________________\n");
+				printf("|ID     |Ten san pham             |Danh muc                           |Gia tien     |\n");
+				printf("-------------------------------------------------------------------------------------\n");
+				printf("|%d      |%20s     |%25s          |%.3f\t    | \n",products[i].id,products[i].nameProduct,products[i].nameCategory,products[i].priceProduct);
+				printf("|_______|_________________________|___________________________________|_____________|\n");
+				check++;
 			}
 		}
-		if(check!=1) {
-		printf("Danh muc khong co trong cua hang\n");
+		if(check==-1) {
+		printf("San pham khong co trong cua hang\n");
 		}
 }
 void arrangeProduct(Product products[],int n,int choose) {
@@ -435,6 +436,9 @@ void arrangeProduct(Product products[],int n,int choose) {
     		}
     		printfProduct(products,n);
        		break;
+       	default:
+			printf("Lua chon khong hop le\n");
+			break;
      	case 3://Thoat
 			break;
 	}
@@ -442,19 +446,19 @@ void arrangeProduct(Product products[],int n,int choose) {
 }
 void checkNameproduct(Product products[],int n) {
 	for(int i=0;i<n;i++) {
-		int letters =0;
+		int letter =0;
 		for(int j=0;j<50;j++) {
-			if (((products[i].nameProduct)[j]>= 'A' && (products[i].nameProduct)[j] <= 'Z') || ((products[i].nameProduct)[j] >= 'a' && (products[i].nameProduct)[j] <= 'z')) {
-            letters++;
+			if ((products[i].nameProduct[j]>= 'A' && products[i].nameProduct[j] <= 'Z') || (products[i].nameProduct[j] >= 'a' && products[i].nameProduct[j] <= 'z')) {
+            letter++;
         }
 		}
-		if(letters>50) {
+		if(letter>25) {
 			fflush(stdin);
 			printf("Do dai san pham khong hop le moi ban nhap lai san pham o vi tri %d:",i+1);
 			fgets(products[i].nameProduct,50,stdin);
 			products[i].nameProduct[strcspn(products[i].nameProduct,"\n")]='\0';
 		}
-		if(letters==0) {
+		if(letter==0) {
 			fflush(stdin);
 			printf("San pham khong duoc de trong moi ban nhap lai san pham o vi tri %d:",i+1);
 			fgets(products[i].nameProduct,50,stdin);
@@ -475,20 +479,21 @@ void checkNameproduct(Product products[],int n) {
     }
 }
 void checkNameinventory(Product products[],int n) {
+	int count =0;
 	for(int i=0;i<n;i++) {
-		int check =0;
 		for(int j=0;j<50;j++) {
-			if (((products[i].nameCategory)[j]>= 'A' && (products[i].nameCategory)[j] <= 'Z') || ((products[i].nameCategory)[j] >= 'a' && (products[i].nameCategory)[j] <= 'z')) {
-            check++;
+			if ((products[i].nameCategory[j]>= 'A' && products[i].nameCategory[j] <= 'Z') || (products[i].nameCategory[j] >= 'a' && products[i].nameCategory[j] <= 'z')) {
+            count++;
         }
 		}
-		if(check>50) {
+		
+		if(count>25) {
 			fflush(stdin);
 			printf("Do dai danh muc khong hop le moi ban nhap lai danh muc o vi tri %d:",i+1);
 			fgets(products[i].nameCategory,50,stdin);
 			products[i].nameCategory[strcspn(products[i].nameCategory,"\n")]='\0';
 		}
-		if(check==0) {
+		if(count==0) {
 			fflush(stdin);
 			printf("Danh muc khong duoc de trong moi ban nhap lai danh muc o vi tri %d:",i+1);
 			fgets(products[i].nameCategory,50,stdin);
